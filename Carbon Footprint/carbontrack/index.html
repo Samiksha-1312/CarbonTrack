@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonTrack — Carbon Footprint Emission Assessment Platform</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="An advanced data-driven assessment platform to measure, analyze, and optimize carbon footprint emissions. Clean environmental themes, interactive calculator, and sustainability reports.">
+    <meta name="keywords" content="carbon footprint, carbon emission, sustainability, greenhouse gases, climate change calculator, eco tracker">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header / Navigation Bar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo" id="nav-logo">
+                <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 8.5C18.4 18 14.5 20 11 20z"></path>
+                    <path d="M19 2c-2.26 4.33-5.27 7.14-8 10"></path>
+                </svg>
+                <span>Carbon<span>Track</span></span>
+            </a>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#methodology" class="nav-link">Methodology</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#privacy" class="nav-link">Privacy</a>
+                <a href="#login" class="nav-btn-login-mobile">Login</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#login" class="btn-login-nav" id="login-nav-trigger">Login</a>
+                <button class="hamburger-toggle" id="hamburger-toggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-tagline">
+                    <span class="pulse-dot"></span> Climate Intelligence Platform
+                </div>
+                <h1 class="hero-title">Measure Today,<br><span class="highlight-text">Sustain Tomorrow</span></h1>
+                <p class="hero-subtitle">
+                    A research-backed platform for understanding and analyzing carbon footprint emissions through high-fidelity, data-driven insights and interactive models.
+                </p>
+                <div class="hero-ctas">
+                    <a href="#calculator" class="btn btn-primary">
+                        <span>Get Started</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                    <a href="#about" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- Graphic Container with Interactive Eco-Scene -->
+            <div class="hero-visual">
+                <div class="glass-scene-card">
+                    <svg class="eco-illustration" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Sky Background & Clouds -->
+                        <g class="sky-elements">
+                            <path class="cloud-1" d="M80 120 C 100 120, 110 100, 130 105 C 145 108, 150 125, 130 135 C 110 140, 90 140, 80 130 Z" fill="white" fill-opacity="0.6"/>
+                            <path class="cloud-2" d="M360 80 C 375 80, 385 70, 400 75 C 410 78, 415 90, 400 100 C 385 105, 370 105, 360 95 Z" fill="white" fill-opacity="0.4"/>
+                        </g>
+
+                        <!-- Glowing Sun -->
+                        <circle cx="250" cy="250" r="160" stroke="url(#sun-glow)" stroke-width="1.5" stroke-dasharray="10 15" class="sun-orbit"/>
+                        <circle cx="250" cy="250" r="120" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                        
+                        <!-- Stylized Earth Core -->
+                        <g class="earth-group">
+                            <circle cx="250" cy="250" r="90" fill="url(#earth-gradient)" class="earth-core"/>
+                            <!-- Landmasses -->
+                            <path d="M210 200 C 230 180, 260 190, 270 210 C 280 230, 310 220, 320 250 C 330 280, 290 320, 260 330 C 230 340, 200 310, 190 280 C 180 250, 190 220, 210 200 Z" fill="#6EE7B7" fill-opacity="0.3" class="earth-land"/>
+                            <path d="M250 170 C 265 170, 275 165, 280 175 C 275 190, 245 195, 235 185 Z" fill="#6EE7B7" fill-opacity="0.35" class="earth-land"/>
+                            <!-- Earth atmosphere ring -->
+                            <circle cx="250" cy="250" r="95" stroke="#60A5FA" stroke-width="2" stroke-opacity="0.4" fill="none"/>
+                        </g>
+
+                        <!-- Eco-Grid Objects -->
+                        <!-- Wind Turbine 1 (Left) -->
+                        <g class="turbine" transform="translate(130, 210)">
+                            <line x1="0" y1="0" x2="0" y2="80" stroke="#E2E8F0" stroke-width="3" stroke-linecap="round"/>
+                            <g class="blades">
+                                <circle cx="0" cy="0" r="4" fill="#64748B"/>
+                                <path d="M0 0 L0 -45 L3 -22 Z" fill="#94A3B8"/>
+                                <path d="M0 0 L39 22 L16 31 Z" fill="#94A3B8"/>
+                                <path d="M0 0 L-39 22 L-30 -10 Z" fill="#94A3B8"/>
+                            </g>
+                        </g>
+                        
+                        <!-- Wind Turbine 2 (Right) -->
+                        <g class="turbine fast" transform="translate(370, 230)">
+                            <line x1="0" y1="0" x2="0" y2="60" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+                            <g class="blades">
+                                <circle cx="0" cy="0" r="3" fill="#64748B"/>
+                                <path d="M0 0 L0 -35 L2 -17 Z" fill="#94A3B8"/>
+                                <path d="M0 0 L30 17 L12 24 Z" fill="#94A3B8"/>
+                                <path d="M0 0 L-30 17 L-23 -8 Z" fill="#94A3B8"/>
+                            </g>
+                        </g>
+
+                        <!-- Swaying Trees -->
+                        <g class="tree tree-left" transform="translate(180, 290)">
+                            <path d="M0 0 L0 30" stroke="#78350F" stroke-width="3"/>
+                            <path d="M-15 0 C -25 -10, -15 -35, 0 -35 C 15 -35, 25 -10, 15 0 Z" fill="#10B981" fill-opacity="0.85"/>
+                            <path d="M-8 -5 C -15 -12, -10 -25, 0 -25 C 10 -25, 15 -12, 8 -5 Z" fill="#34D399" fill-opacity="0.8"/>
+                        </g>
+                        
+                        <g class="tree tree-right" transform="translate(310, 300)">
+                            <path d="M0 0 L0 25" stroke="#78350F" stroke-width="2"/>
+                            <path d="M-12 0 C -20 -8, -12 -28, 0 -28 C 12 -28, 20 -8, 12 0 Z" fill="#047857" fill-opacity="0.85"/>
+                            <path d="M-6 -4 C -12 -10, -8 -20, 0 -20 C 8 -20, 12 -10, 6 -4 Z" fill="#059669" fill-opacity="0.8"/>
+                        </g>
+
+                        <!-- Solar Panels -->
+                        <g class="solar-panel" transform="translate(230, 340)">
+                            <rect x="0" y="0" width="40" height="20" rx="2" transform="skewX(-15)" fill="#1E3A8A" stroke="#E2E8F0" stroke-width="1.5"/>
+                            <line x1="10" y1="0" x2="30" y2="20" stroke="#3B82F6" stroke-width="1" transform="skewX(-15)"/>
+                            <line x1="20" y1="0" x2="10" y2="20" stroke="#3B82F6" stroke-width="1" transform="skewX(-15)"/>
+                            <line x1="0" y1="10" x2="40" y2="10" stroke="#3B82F6" stroke-width="1" transform="skewX(-15)"/>
+                            <line x1="20" y1="20" x2="20" y2="35" stroke="#475569" stroke-width="2.5"/>
+                        </g>
+
+                        <!-- Animated Leaves floating -->
+                        <path class="leaf-particle l1" d="M80 340 C90 330, 105 330, 110 345 C100 355, 85 350, 80 340 Z" fill="#10B981" fill-opacity="0.7"/>
+                        <path class="leaf-particle l2" d="M410 350 C420 340, 435 345, 438 355 C428 365, 415 360, 410 350 Z" fill="#34D399" fill-opacity="0.6"/>
+
+                        <!-- Gradients definition -->
+                        <defs>
+                            <radialGradient id="sun-glow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#34D399" stop-opacity="0.3"/>
+                                <stop offset="60%" stop-color="#3B82F6" stop-opacity="0.1"/>
+                                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+                            </radialGradient>
+                            <linearGradient id="earth-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#065F46"/>
+                                <stop offset="50%" stop-color="#047857"/>
+                                <stop offset="100%" stop-color="#1E3A8A"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Carbon Footprint Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-label">Understanding Emissions</span>
+                <h2 class="section-title">What is a Carbon Footprint?</h2>
+                <div class="title-bar"></div>
+                <p class="section-desc">
+                    A carbon footprint represents the total volume of greenhouse gases—principally carbon dioxide and methane—emitted directly or indirectly by our daily actions. Measuring it is the critical first step toward environmental preservation.
+                </p>
+            </div>
+
+            <div class="grid grid-3">
+                <!-- Card 1 -->
+                <div class="card about-card scroll-reveal">
+                    <div class="card-icon-container">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="card-icon green">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <h3>Economic Footprint</h3>
+                    <p>Industrial activities, fossil fuel generation, and global transportation drive the largest global greenhouse emissions, reshaping our economy and pricing carbon.</p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="card about-card scroll-reveal">
+                    <div class="card-icon-container">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="card-icon blue">
+                            <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z"></path>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <h3>Global Climate Impact</h3>
+                    <p>Accumulating emissions heat our atmosphere, causing volatile climates, rising ocean levels, and severe weather patterns that impact biodiversity worldwide.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card about-card scroll-reveal">
+                    <div class="card-icon-container">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="card-icon emerald">
+                            <path d="M2 22s1.5-2 3.5-2.5S10 19 12 17s3-3.5 3.5-5.5C16 9.5 15.5 8 16 6s2.5-3 5-4c.5 2.5.5 5-1.5 6.5s-4 1.5-5.5 3c-2 2-2.5 5.5-3 7.5S8 22 8 22H2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Individual Power</h3>
+                    <p>Simple routine choices—such as commuting choices, home heating practices, and dietary selections—aggregate to form your individual carbon legacy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Carbon Footprint Calculator Widget -->
+    <section class="calculator-section" id="calculator">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-label">Real-time Assessment</span>
+                <h2 class="section-title">Interactive Carbon Calculator</h2>
+                <div class="title-bar"></div>
+                <p class="section-desc">Estimate your annualized carbon footprint using basic parameters based on EPA emission conversion ratios.</p>
+            </div>
+
+            <div class="calculator-wrapper glass-card">
+                <div class="calculator-form">
+                    <!-- Step 1: Transport -->
+                    <div class="form-group-wrapper">
+                        <h4 class="form-section-title">
+                            <span class="step-num">1</span> Transportation
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-control">
+                                <label for="car-miles">Weekly Driving (Miles)</label>
+                                <input type="number" id="car-miles" value="100" min="0" placeholder="e.g. 120">
+                            </div>
+                            <div class="form-control">
+                                <label for="vehicle-type">Vehicle Engine Type</label>
+                                <select id="vehicle-type">
+                                    <option value="gasoline">Standard Gasoline (SUV/Sedan)</option>
+                                    <option value="diesel">Diesel Vehicle</option>
+                                    <option value="hybrid">Hybrid Vehicle</option>
+                                    <option value="electric">Electric (EV)</option>
+                                </select>
+                            </div>
+                            <div class="form-control">
+                                <label for="flights">Flights Taken (Per Year)</label>
+                                <input type="number" id="flights" value="2" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Energy -->
+                    <div class="form-group-wrapper">
+                        <h4 class="form-section-title">
+                            <span class="step-num">2</span> Household Energy
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-control">
+                                <label for="electricity">Electricity Bill (Monthly $)</label>
+                                <input type="number" id="electricity" value="80" min="0">
+                            </div>
+                            <div class="form-control">
+                                <label for="clean-energy">Clean/Renewable Share (%)</label>
+                                <input type="range" id="clean-energy" min="0" max="100" value="20" class="slider">
+                                <span class="range-val" id="clean-energy-val">20%</span>
+                            </div>
+                            <div class="form-control">
+                                <label for="household-members">Household Members</label>
+                                <input type="number" id="household-members" value="2" min="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Lifestyle & Diet -->
+                    <div class="form-group-wrapper">
+                        <h4 class="form-section-title">
+                            <span class="step-num">3</span> Lifestyle & Nutrition
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-control">
+                                <label for="diet-type">Diet Pattern</label>
+                                <select id="diet-type">
+                                    <option value="heavy-meat">Meat Heavy (Daily Beef/Pork)</option>
+                                    <option value="medium-meat">Average (Balanced Meat/Veg)</option>
+                                    <option value="vegetarian">Vegetarian (No Meat)</option>
+                                    <option value="vegan">Vegan (Strict Plant-based)</option>
+                                </select>
+                            </div>
+                            <div class="form-control">
+                                <label for="waste-recycle">Recycle Household Waste?</label>
+                                <select id="waste-recycle">
+                                    <option value="yes">Yes, regularly recycle</option>
+                                    <option value="no">No active recycling</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Outputs (Visual meters) -->
+                <div class="calculator-results">
+                    <div class="results-header">
+                        <h3>Your Carbon Legacy</h3>
+                        <p>Annualized CO₂ equivalent (Metric Tons)</p>
+                    </div>
+
+                    <div class="emissions-score-box">
+                        <div class="score-number" id="carbon-score">4.8</div>
+                        <div class="score-unit">Tons CO₂e / Year</div>
+                    </div>
+
+                    <!-- Visual Progress Bar -->
+                    <div class="meter-container">
+                        <div class="meter-labels">
+                            <span>Eco Hero (0T)</span>
+                            <span>Avg Target (5T)</span>
+                            <span>High (12T+)</span>
+                        </div>
+                        <div class="meter-bar-track">
+                            <div class="meter-bar-fill" id="meter-fill" style="width: 40%;"></div>
+                            <div class="meter-pointer" id="meter-pointer" style="left: 40%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Indicator -->
+                    <div class="comparison-indicator" id="comparison-text">
+                        Your score is <strong>35% below</strong> the national average (7.5 Tons/person).
+                    </div>
+
+                    <div class="insight-tips" id="insight-tips">
+                        <div class="tip-title">⚡ Top Reduction Opportunity</div>
+                        <p class="tip-content">Transitioning to 50%+ renewable energy can shave off up to 1.2 Tons of CO2e annually.</p>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" id="recalculate-btn">Recalculate Model</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="methodology-section" id="methodology">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-label">Our Process</span>
+                <h2 class="section-title">Assessment Methodology</h2>
+                <div class="title-bar"></div>
+                <p class="section-desc">
+                    CarbonTrack leverages environmental frameworks established by the Intergovernmental Panel on Climate Change (IPCC) and the EPA to guarantee analytical accuracy.
+                </p>
+            </div>
+
+            <!-- Interactive visual timeline -->
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <!-- Step 1 -->
+                <div class="timeline-step active" data-step="1">
+                    <div class="timeline-marker">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="timeline-icon">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                    </div>
+                    <div class="timeline-content card">
+                        <span class="step-badge">Step 01</span>
+                        <h3>Data Collection</h3>
+                        <p>User logs daily variables including energy utility bills, transport fuels, dietary profiles, and recycling habits securely into the engine.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-step" data-step="2">
+                    <div class="timeline-marker">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="timeline-icon">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                        </svg>
+                    </div>
+                    <div class="timeline-content card">
+                        <span class="step-badge">Step 02</span>
+                        <h3>Emission Calculation</h3>
+                        <p>Our processing layer maps inputs against localized carbon coefficients (e.g., eGRID regional grid emissions, EPA transport fuel density tables).</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-step" data-step="3">
+                    <div class="timeline-marker">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="timeline-icon">
+                            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                            <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                        </svg>
+                    </div>
+                    <div class="timeline-content card">
+                        <span class="step-badge">Step 03</span>
+                        <h3>Statistical Analysis</h3>
+                        <p>Data aggregates to categorize sources (scopes 1, 2, and 3 emissions) and benchmarks profiles against global climate reduction agreements.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-step" data-step="4">
+                    <div class="timeline-marker">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="timeline-icon">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
+                    <div class="timeline-content card">
+                        <span class="step-badge">Step 04</span>
+                        <h3>Recommendations</h3>
+                        <p>AI heuristics supply personalized action plans—like micro-offset investments, solar installation timelines, and low-carb habits.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Methodology Details Panel (Changes dynamically depending on active step click) -->
+            <div class="methodology-details-panel glass-card text-center" id="methodology-details">
+                <h4 id="detail-title">Data Collection Deep-Dive</h4>
+                <p id="detail-desc">Our primary ledger ingests data variables via API hooks. Users can hook smart meters or upload utility statement sheets to automate calculations. All metrics conform to standard equivalent mass parameters of Carbon Dioxide (CO₂e).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-label">Engine Capabilities</span>
+                <h2 class="section-title">Core Platform Features</h2>
+                <div class="title-bar"></div>
+                <p class="section-desc">
+                    CarbonTrack pairs highly structured reporting tools with environmental models to deliver actionable climate insight.
+                </p>
+            </div>
+
+            <div class="grid grid-2">
+                <!-- Feature 1 -->
+                <div class="feature-card glass-card scroll-reveal">
+                    <div class="feature-header">
+                        <div class="feature-icon bg-green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Granular Emission Tracking</h3>
+                    </div>
+                    <p>Track your footprint down to exact daily activities. Log single commutes, appliance uses, and purchase decisions to view continuous impact shifts.</p>
+                    <div class="hover-decoration"></div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card glass-card scroll-reveal">
+                    <div class="feature-header">
+                        <div class="feature-icon bg-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon">
+                                <path d="M3 3v18h18"></path>
+                                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                            </svg>
+                        </div>
+                        <h3>Interactive Data Visualizations</h3>
+                    </div>
+                    <p>Visualize scopes of emissions through dynamic charts, sankey diagrams, and atmospheric impact trends. Customize dashboards for research exports.</p>
+                    <div class="hover-decoration"></div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card glass-card scroll-reveal">
+                    <div class="feature-header">
+                        <div class="feature-icon bg-emerald">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Compliance Reports</h3>
+                    </div>
+                    <p>Generate formal environmental sheets. Perfect for academic assignments, corporate ESG metrics, or municipal carbon registries.</p>
+                    <div class="hover-decoration"></div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card glass-card scroll-reveal">
+                    <div class="feature-header">
+                        <div class="feature-icon bg-teal">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l-7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <h3>Sustainability Insights</h3>
+                    </div>
+                    <p>Leverage custom sustainability algorithms that suggest context-rich micro-adjustments tailored to your location, lifestyle, and climate resources.</p>
+                    <div class="hover-decoration"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Policy Overview Section -->
+    <section class="privacy-section" id="privacy">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-label">Trust & Security</span>
+                <h2 class="section-title">Privacy & Data Governance</h2>
+                <div class="title-bar"></div>
+                <p class="section-desc">
+                    CarbonTrack treats user metrics with high security. We enforce transparent client-side calculation parameters.
+                </p>
+            </div>
+
+            <div class="privacy-grid glass-card scroll-reveal">
+                <div class="privacy-graphic">
+                    <svg viewBox="0 0 200 200" class="shield-illustration" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="80" fill="url(#shield-bg-grad)" />
+                        <!-- Shield -->
+                        <path d="M100 45 C 115 45, 140 40, 145 35 C 145 60, 145 105, 100 150 C 55 105, 55 60, 55 35 C 60 40, 85 45, 100 45 Z" fill="#10B981" fill-opacity="0.2" stroke="#34D399" stroke-width="4"/>
+                        <!-- Lock Icon inside Shield -->
+                        <rect x="85" y="90" width="30" height="22" rx="3" fill="#3B82F6"/>
+                        <path d="M90 90 V 78 A 10 10 0 0 1 110 78 V 90" stroke="#3B82F6" stroke-width="3.5" fill="none"/>
+                        <circle cx="100" cy="101" r="3" fill="white"/>
+                        <path d="M100 104 V 108" stroke="white" stroke-width="2"/>
+                        <!-- Ambient Sparkles -->
+                        <circle cx="45" cy="70" r="3" fill="#6EE7B7" class="sparkle"/>
+                        <circle cx="150" cy="130" r="4" fill="#60A5FA" class="sparkle fast"/>
+                        <defs>
+                            <radialGradient id="shield-bg-grad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#1E293B" stop-opacity="0.8"/>
+                                <stop offset="100%" stop-color="#0F172A" stop-opacity="0.95"/>
+                            </radialGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="privacy-info">
+                    <div class="privacy-item">
+                        <h4>🔒 Full Confidentiality & Encryption</h4>
+                        <p>Every utility bill metric and private lifestyle factor is encrypted in transit and at rest. We never sell your personal information or profile metrics.</p>
+                    </div>
+                    <div class="privacy-item">
+                        <h4>🌱 Transparent Consent</h4>
+                        <p>We only log your data if you choose to create an account. You retain full control over your logs and can scrub all data elements instantly from our dashboard at any time.</p>
+                    </div>
+                    <div class="privacy-item">
+                        <h4>📊 Academic Integrity</h4>
+                        <p>Created for research purposes, CarbonTrack models run solely to illustrate environmental ratios. We strictly operate as a non-commercial, open resource.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Section -->
+    <section class="login-section" id="login">
+        <div class="container">
+            <div class="login-wrapper">
+                <div class="card login-card glass-card scroll-reveal">
+                    <div class="login-header">
+                        <div class="logo">
+                            <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 8.5C18.4 18 14.5 20 11 20z"></path>
+                            </svg>
+                            <span>Carbon<span>Track</span></span>
+                        </div>
+                        <h3>Welcome Back</h3>
+                        <p>Access your personal carbon assessment tracker</p>
+                    </div>
+
+                    <form class="login-form" id="login-form">
+                        <div class="form-control">
+                            <label for="login-email">Email Address</label>
+                            <input type="email" id="login-email" required placeholder="name@domain.com">
+                        </div>
+                        <div class="form-control">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" required placeholder="••••••••">
+                        </div>
+                        
+                        <div class="login-actions-row">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="remember-me">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="forgot-pass">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </form>
+
+                    <div class="divider">
+                        <span>or continue with</span>
+                    </div>
+
+                    <button class="btn btn-google btn-block" id="btn-google-login">
+                        <svg class="google-icon" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+                        </svg>
+                        Sign in with Google
+                    </button>
+                    
+                    <div class="login-footer-text">
+                        Don't have a profile yet? <a href="#">Create account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification System -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Modal Success Popup -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-card glass-card">
+            <div class="modal-icon bg-green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h3 id="modal-title">Success</h3>
+            <p id="modal-message">Your operations executed correctly.</p>
+            <button class="btn btn-primary" id="modal-close-btn">Dismiss</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Info Column -->
+                <div class="footer-col brand-col">
+                    <a href="#home" class="logo">
+                        <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 8.5C18.4 18 14.5 20 11 20z"></path>
+                        </svg>
+                        <span>Carbon<span>Track</span></span>
+                    </a>
+                    <p class="quote">"Small actions create a greener future."</p>
+                    <p class="footer-about">An academic research portal focused on localized carbon indices and smart consumption models.</p>
+                </div>
+
+                <!-- Navigation Column -->
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Platform</a></li>
+                        <li><a href="#calculator">Footprint Calculator</a></li>
+                        <li><a href="#methodology">Our Methodology</a></li>
+                        <li><a href="#features">Core Features</a></li>
+                        <li><a href="#privacy">Privacy Governance</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contacts Column -->
+                <div class="footer-col">
+                    <h4>Contact & Research</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="footer-icon">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <span>research@carbontrack.org</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="footer-icon">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>University Research Hub, Campus Green</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="footer-icon">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <span>+1 (555) 234-9876</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright area -->
+            <div class="footer-bottom">
+                <div>&copy; 2026 CarbonTrack Platform. Developed for the Environmental Sciences Research Project. All rights reserved.</div>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Github Link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    </a>
+                    <a href="#" aria-label="Twitter Link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
