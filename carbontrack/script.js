@@ -232,6 +232,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             insightTextEl.innerHTML = `Enter operational values to see dynamically generated AI insights.`;
         }
+
+        // Recalculate transition planner trajectory
+        if (typeof calculateForecastPathway === 'function') {
+            calculateForecastPathway();
+        }
     }
 
     // Smooth value number transitions
@@ -604,4 +609,307 @@ document.addEventListener('DOMContentLoaded', () => {
             tooltip.style.display = 'none';
         });
     }
+
+    /* ==========================================
+       10. Net-Zero Transition Planner & Forecast Logic
+       ========================================== */
+    // Initiative Checkboxes
+    const initSolar = document.getElementById('init-solar');
+    const initEv = document.getElementById('init-ev');
+    const initLed = document.getElementById('init-led');
+    const initWaste = document.getElementById('init-waste');
+    const initPaper = document.getElementById('init-paper');
+
+    // Planner Data
+    const INITIATIVE_DATA = {
+        solar: { capEx: 45000, payback: 5.0 },
+        ev: { capEx: 60000, payback: 6.0 },
+        led: { capEx: 15000, payback: 3.5 },
+        waste: { capEx: 8000, payback: 2.0 },
+        paper: { capEx: 3000, payback: 1.0 }
+    };
+
+    // Update forecast curves and calculations
+    function calculateForecastPathway() {
+        // Read current calculator values
+        const diesel = Math.max(0, parseFloat(dieselInput.value) || 0);
+        const petrol = Math.max(0, parseFloat(petrolInput.value) || 0);
+        const lpg = Math.max(0, parseFloat(lpgInput.value) || 0);
+        const refrigerant = Math.max(0, parseFloat(refrigerantInput.value) || 0);
+        const originalElectricity = Math.max(0, parseFloat(electricityInput.value) || 0);
+        const water = Math.max(0, parseFloat(waterInput.value) || 0);
+        const paper = Math.max(0, parseFloat(paperInput.value) || 0);
+        const waste = Math.max(0, parseFloat(wasteInput.value) || 0);
+        const travel = Math.max(0, parseFloat(travelInput.value) || 0);
+
+        // Scope 1, 2, 3 Baseline Calculations
+        const scope1Base = ((diesel * EMISSION_FACTORS.diesel) +
+                            (petrol * EMISSION_FACTORS.petrol) +
+                            (lpg * EMISSION_FACTORS.lpg) +
+                            (refrigerant * EMISSION_FACTORS.refrigerant)) / 1000;
+        const scope2Base = (originalElectricity * EMISSION_FACTORS.electricity) / 1000;
+        const scope3Base = ((water * EMISSION_FACTORS.water) +
+                            (paper * EMISSION_FACTORS.paper) +
+                            (waste * EMISSION_FACTORS.waste) +
+                            (travel * EMISSION_FACTORS.travel)) / 1000;
+
+        const totalBaseTons = scope1Base + scope2Base + scope3Base;
+
+        // Calculate active initiative reductions
+        let totalSavings = 0;
+        let activeCapEx = 0;
+        let weightedPaybackSum = 0;
+
+        if (initSolar && initSolar.checked) {
+            const solarSavings = scope2Base * 0.30;
+            totalSavings += solarSavings;
+            activeCapEx += INITIATIVE_DATA.solar.capEx;
+            weightedPaybackSum += INITIATIVE_DATA.solar.capEx * INITIATIVE_DATA.solar.payback;
+        }
+        if (initEv && initEv.checked) {
+            const fleetFuelBase = ((diesel * EMISSION_FACTORS.diesel) + (petrol * EMISSION_FACTORS.petrol)) / 1000;
+            const evSavings = fleetFuelBase * 0.80;
+            totalSavings += evSavings;
+            activeCapEx += INITIATIVE_DATA.ev.capEx;
+            weightedPaybackSum += INITIATIVE_DATA.ev.capEx * INITIATIVE_DATA.ev.payback;
+        }
+        if (initLed && initLed.checked) {
+            const ledSavings = scope2Base * 0.15;
+            totalSavings += ledSavings;
+            activeCapEx += INITIATIVE_DATA.led.capEx;
+            weightedPaybackSum += INITIATIVE_DATA.led.capEx * INITIATIVE_DATA.led.payback;
+        }
+        if (initWaste && initWaste.checked) {
+            const wasteBase = (waste * EMISSION_FACTORS.waste) / 1000;
+            const wasteSavings = wasteBase * 0.60;
+            totalSavings += wasteSavings;
+            activeCapEx += INITIATIVE_DATA.waste.capEx;
+            weightedPaybackSum += INITIATIVE_DATA.waste.capEx * INITIATIVE_DATA.waste.payback;
+        }
+        if (initPaper && initPaper.checked) {
+            const paperBase = (paper * EMISSION_FACTORS.paper) / 1000;
+            const paperSavings = paperBase * 0.90;
+            totalSavings += paperSavings;
+            activeCapEx += INITIATIVE_DATA.paper.capEx;
+            weightedPaybackSum += INITIATIVE_DATA.paper.capEx * INITIATIVE_DATA.paper.payback;
+        }
+
+        const avgPayback = activeCapEx > 0 ? (weightedPaybackSum / activeCapEx) : 0;
+        const reductionPct = totalBaseTons > 0 ? (totalSavings / totalBaseTons) * 100 : 0;
+
+        // UI Element Selectors
+        const reductionTonsEl = document.getElementById('planner-reduction-tons');
+        const reductionPctEl = document.getElementById('planner-reduction-pct');
+        const totalCapExEl = document.getElementById('planner-total-capex');
+        const avgPaybackEl = document.getElementById('planner-avg-payback');
+
+        // Animate counter values
+        if (reductionTonsEl) {
+            const rPrev = parseFloat(reductionTonsEl.textContent) || 0;
+            animateValue(reductionTonsEl, rPrev, totalSavings, 600, 2, '');
+        }
+        if (reductionPctEl) {
+            const pPrev = parseFloat(reductionPctEl.textContent) || 0;
+            animateValue(reductionPctEl, pPrev, reductionPct, 600, 0, '');
+        }
+        if (totalCapExEl) {
+            const cPrev = parseFloat(totalCapExEl.textContent.replace(/,/g, '')) || 0;
+            animateValue(totalCapExEl, cPrev, activeCapEx, 600, 0, '');
+        }
+        if (avgPaybackEl) {
+            const bPrev = parseFloat(avgPaybackEl.textContent) || 0;
+            animateValue(avgPaybackEl, bPrev, avgPayback, 600, 1, '');
+        }
+
+        // Generate 10-year projection coordinates
+        // BAU baseline climbs 1.5% YoY
+        // Decarbonization pathway phases savings over 5 years (20% yr1, 40% yr2, 60% yr3, 80% yr4, 100% yr5+)
+        const bauData = [];
+        const decData = [];
+        let currentBau = totalBaseTons;
+
+        bauData.push(currentBau);
+        decData.push(currentBau);
+
+        for (let t = 1; t <= 10; t++) {
+            currentBau = currentBau * 1.015;
+            bauData.push(currentBau);
+
+            const phaseFactor = Math.min(1.0, t * 0.2);
+            const currentDec = Math.max(0, currentBau - (totalSavings * phaseFactor));
+            decData.push(currentDec);
+        }
+
+        // Redraw SVG path structures
+        renderForecastChartSVG(bauData, decData);
+    }
+
+    // Programmatically plot and update SVG paths
+    function renderForecastChartSVG(bauData, decData) {
+        const pathBau = document.getElementById('chart-path-bau');
+        const pathBauArea = document.getElementById('chart-path-bau-area');
+        const pathDec = document.getElementById('chart-path-decarb');
+        const pathDecArea = document.getElementById('chart-path-decarb-area');
+
+        const yMaxEl = document.getElementById('forecast-y-max');
+        const yMid2El = document.getElementById('forecast-y-mid2');
+        const yMid1El = document.getElementById('forecast-y-mid1');
+
+        if (!pathBau || !pathDec) return;
+
+        // Determine Y Axis boundaries
+        const maxVal = Math.max(...bauData);
+        const yMax = Math.max(20, Math.ceil(maxVal / 10) * 10);
+
+        if (yMaxEl) yMaxEl.textContent = `${yMax.toFixed(0)}t`;
+        if (yMid2El) yMid2El.textContent = `${(yMax * 0.75).toFixed(0)}t`;
+        if (yMid1El) yMid1El.textContent = `${(yMax * 0.50).toFixed(0)}t`;
+
+        // SVG Viewbox dimensions (500x250)
+        const svgW = 500;
+        const svgH = 250;
+
+        let dBau = '';
+        let dDec = '';
+
+        for (let t = 0; t <= 10; t++) {
+            const x = (t / 10) * svgW;
+            const yBau = svgH - (bauData[t] / yMax) * svgH;
+            const yDec = svgH - (decData[t] / yMax) * svgH;
+
+            if (t === 0) {
+                dBau += `M ${x} ${yBau}`;
+                dDec += `M ${x} ${yDec}`;
+            } else {
+                dBau += ` L ${x} ${yBau}`;
+                dDec += ` L ${x} ${yDec}`;
+            }
+        }
+
+        pathBau.setAttribute('d', dBau);
+        pathDec.setAttribute('d', dDec);
+
+        // Fill areas
+        const dBauArea = dBau + ` L ${svgW} ${svgH} L 0 ${svgH} Z`;
+        const dDecArea = dDec + ` L ${svgW} ${svgH} L 0 ${svgH} Z`;
+
+        if (pathBauArea) pathBauArea.setAttribute('d', dBauArea);
+        if (pathDecArea) pathDecArea.setAttribute('d', dDecArea);
+
+        // Save layout variables globally for tooltip events
+        window.forecastChartData = {
+            bau: bauData,
+            dec: decData,
+            yMax: yMax
+        };
+    }
+
+    // Expose forecasting calculations globally
+    window.calculateForecastPathway = calculateForecastPathway;
+
+    // Attach checkbox click listeners
+    const plannerCheckboxes = [initSolar, initEv, initLed, initWaste, initPaper];
+    plannerCheckboxes.forEach(cb => {
+        if (cb) {
+            cb.addEventListener('change', () => {
+                const card = cb.closest('.initiative-card');
+                if (card) {
+                    if (cb.checked) card.classList.add('active');
+                    else card.classList.remove('active');
+                }
+                calculateForecastPathway();
+            });
+        }
+    });
+
+    /* ==========================================
+       11. Forecast Chart Interactive Hover Effects
+       ========================================== */
+    const forecastWrapper = document.getElementById('forecast-chart-wrapper');
+    if (forecastWrapper) {
+        const tooltip = document.createElement('div');
+        tooltip.className = 'forecast-tooltip';
+        forecastWrapper.appendChild(tooltip);
+
+        const guideLine = document.createElement('div');
+        guideLine.className = 'forecast-guide-line';
+        forecastWrapper.appendChild(guideLine);
+
+        const dotBau = document.createElement('div');
+        dotBau.className = 'forecast-data-dot-bau';
+        forecastWrapper.appendChild(dotBau);
+
+        const dotDec = document.createElement('div');
+        dotDec.className = 'forecast-data-dot-decarb';
+        forecastWrapper.appendChild(dotDec);
+
+        const startYear = 2026;
+
+        forecastWrapper.addEventListener('mousemove', (e) => {
+            if (!window.forecastChartData) return;
+
+            const rect = forecastWrapper.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const width = rect.width;
+
+            // Map pixel x coordinate to viewBox (0 to 500)
+            const viewBoxX = (mouseX / width) * 500;
+
+            // Calculate closest year index (0 to 10)
+            let t = Math.round((viewBoxX / 500) * 10);
+            t = Math.max(0, Math.min(10, t));
+
+            const year = startYear + t;
+            const bauVal = window.forecastChartData.bau[t];
+            const decVal = window.forecastChartData.dec[t];
+            const yMax = window.forecastChartData.yMax;
+
+            // Map back to canvas pixels
+            const dotPixelX = (t / 10) * width;
+            const dotPixelYBau = (1 - (bauVal / yMax)) * rect.height;
+            const dotPixelYDec = (1 - (decVal / yMax)) * rect.height;
+
+            // Show guides & markers
+            guideLine.style.display = 'block';
+            guideLine.style.left = `${dotPixelX}px`;
+
+            dotBau.style.display = 'block';
+            dotBau.style.left = `${dotPixelX - 5}px`;
+            dotBau.style.top = `${dotPixelYBau - 5}px`;
+
+            dotDec.style.display = 'block';
+            dotDec.style.left = `${dotPixelX - 6}px`;
+            dotDec.style.top = `${dotPixelYDec - 6}px`;
+
+            tooltip.style.display = 'block';
+            tooltip.style.left = `${dotPixelX}px`;
+            tooltip.style.top = `${Math.min(dotPixelYBau, dotPixelYDec) - 10}px`;
+
+            tooltip.innerHTML = `
+                <div class="tooltip-year">FY ${year}-${(year+1).toString().slice(2)}</div>
+                <div class="tooltip-val tooltip-val-bau">
+                    <span>BAU Baseline:</span>
+                    <strong>${bauVal.toFixed(2)} t</strong>
+                </div>
+                <div class="tooltip-val tooltip-val-decarb">
+                    <span>Projected:</span>
+                    <strong>${decVal.toFixed(2)} t</strong>
+                </div>
+                <div class="tooltip-val" style="color: #10B981; font-weight: 700; margin-top: 4px; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 4px;">
+                    <span>Savings:</span>
+                    <span>-${(bauVal - decVal).toFixed(2)} t</span>
+                </div>
+            `;
+        });
+
+        forecastWrapper.addEventListener('mouseleave', () => {
+            guideLine.style.display = 'none';
+            dotBau.style.display = 'none';
+            dotDec.style.display = 'none';
+            tooltip.style.display = 'none';
+        });
+    }
+
+    // Trigger initial projection update
+    calculateForecastPathway();
 });
