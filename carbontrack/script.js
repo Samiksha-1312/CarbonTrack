@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function calculateEmissions() {
+        if (!dieselInput) return;
         // Read values safely
         const diesel = Math.max(0, parseFloat(dieselInput.value) || 0);
         const petrol = Math.max(0, parseFloat(petrolInput.value) || 0);
@@ -631,6 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update forecast curves and calculations
     function calculateForecastPathway() {
+        if (!dieselInput) return;
         // Read current calculator values
         const diesel = Math.max(0, parseFloat(dieselInput.value) || 0);
         const petrol = Math.max(0, parseFloat(petrolInput.value) || 0);

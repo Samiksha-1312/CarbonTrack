@@ -32,6 +32,7 @@
                 <a href="#about" class="nav-link">About</a>
                 <a href="#methodology" class="nav-link">Methodology</a>
                 <a href="#features" class="nav-link">Features</a>
+                <a href="calculator.html" class="nav-link">Calculator</a>
                 <a href="#planner" class="nav-link">Planner</a>
                 <a href="#privacy" class="nav-link">Privacy</a>
                 <a href="#login" class="nav-btn-login-mobile">Login</a>
@@ -103,7 +104,7 @@
                     </div>
                 </div>
                 <div class="hero-ctas">
-                    <a href="#calculator" class="btn btn-primary">
+                    <a href="calculator.html" class="btn btn-primary">
                         <span>Explore Platform</span>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </a>
@@ -350,204 +351,7 @@
         </div>
     </section>
 
-    <!-- Interactive Carbon Footprint Calculator Widget -->
-    <section class="calculator-section" id="calculator">
-        <div class="container">
-            <div class="section-header text-center">
-                <span class="section-label">Institutional Assessment</span>
-                <h2 class="section-title">Carbon Inventory Calculator</h2>
-                <div class="title-bar"></div>
-                <p class="section-desc">Enter annual activity data across Scope 1, 2, and 3 categories. Emissions are computed using standard CO₂e factors.</p>
-            </div>
 
-            <div class="calculator-wrapper glass-card">
-                <div class="calculator-form">
-                    <!-- Organization Sector Benchmarking Profile -->
-                    <div class="form-group-wrapper" style="margin-bottom: 24px; border-bottom: 1.5px solid rgba(0,0,0,0.06); padding-bottom: 20px;">
-                        <h4 class="form-section-title" style="margin-bottom: 12px;">
-                            <span class="title-left" style="color: var(--primary);">
-                                <span class="step-num" style="background: var(--primary); color: white; border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; margin-right: 10px;">★</span> Organization Sector Profile
-                            </span>
-                        </h4>
-                        <div class="form-grid" style="grid-template-columns: 1fr;">
-                            <div class="form-control">
-                                <label for="organization-sector">Select Sector for Peer Benchmarking</label>
-                                <select id="organization-sector" style="width: 100%; padding: 12px 16px; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 10px; font-family: inherit; font-size: 0.95rem; background: var(--white); color: var(--dark); outline: none; transition: var(--transition); cursor: pointer;">
-                                    <option value="tech-office">Technology Office (Benchmark: 35.00 tCO₂e)</option>
-                                    <option value="university">University Campus (Benchmark: 120.00 tCO₂e)</option>
-                                    <option value="manufacturing">Manufacturing Facility (Benchmark: 450.00 tCO₂e)</option>
-                                    <option value="retail">Retail Store (Benchmark: 25.00 tCO₂e)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 1: Scope 1 -->
-                    <div class="form-group-wrapper">
-                        <h4 class="form-section-title">
-                            <span class="title-left">
-                                <span class="step-num">1</span> Direct Emissions (Fuel & Refrigerants)
-                            </span>
-                            <span class="scope-badge scope1">Scope 1</span>
-                        </h4>
-                        <div class="form-grid">
-                            <div class="form-control">
-                                <label for="diesel-consumption">Diesel Consumption (L / year)</label>
-                                <input type="number" id="diesel-consumption" value="500" min="0">
-                            </div>
-                            <div class="form-control">
-                                <label for="petrol-consumption">Petrol Consumption (L / year)</label>
-                                <input type="number" id="petrol-consumption" value="300" min="0">
-                            </div>
-                            <div class="form-control">
-                                <label for="lpg-consumption">LPG Consumption (kg / year)</label>
-                                <input type="number" id="lpg-consumption" value="120" min="0">
-                            </div>
-                            <div class="form-control">
-                                <label for="refrigerant-leakage">Refrigerant Leakage (kg / year)</label>
-                                <input type="number" id="refrigerant-leakage" value="0.5" step="0.1" min="0">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 2: Scope 2 -->
-                    <div class="form-group-wrapper">
-                        <h4 class="form-section-title">
-                            <span class="title-left">
-                                <span class="step-num">2</span> Purchased Energy
-                            </span>
-                            <span class="scope-badge scope2">Scope 2</span>
-                        </h4>
-                        <div class="form-grid">
-                            <div class="form-control">
-                                <label for="electricity-consumption">Electricity Consumption (kWh / year)</label>
-                                <input type="number" id="electricity-consumption" value="25000" min="0">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Scope 3 -->
-                    <div class="form-group-wrapper">
-                        <h4 class="form-section-title">
-                            <span class="title-left">
-                                <span class="step-num">3</span> Value Chain Emissions
-                            </span>
-                            <span class="scope-badge scope3">Scope 3</span>
-                        </h4>
-                        <div class="form-grid">
-                            <div class="form-control">
-                                <label for="water-consumption">Water Consumption (kL / year)</label>
-                                <input type="number" id="water-consumption" value="800" min="0">
-                            </div>
-                            <div class="form-control">
-                                <label for="paper-usage">Paper Usage (kg / year)</label>
-                                <input type="number" id="paper-usage" value="1200" min="0">
-                            </div>
-                            <div class="form-control">
-                                <label for="waste-generated">Waste Generated (kg / year)</label>
-                                <input type="number" id="waste-generated" value="2500" min="0">
-                            </div>
-                            <div class="form-control">
-                                <label for="business-travel">Business Travel (km / year)</label>
-                                <input type="number" id="business-travel" value="15000" min="0">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Calculator Outputs (Visual meters) -->
-                <div class="calculator-results">
-                    <div class="results-header">
-                        <h3>Institution Carbon Inventory</h3>
-                        <p>Annualized CO₂e across Scope 1, 2 & 3</p>
-                    </div>
-
-                    <div class="emissions-score-box">
-                        <div class="score-number" id="carbon-score">29.07</div>
-                        <div class="score-unit">TONNES CO₂E / YEAR</div>
-                    </div>
-
-                    <!-- Scope Breakdown Bars -->
-                    <div class="scopes-breakdown">
-                        <div class="scope-row">
-                            <div class="scope-info">
-                                <span>Scope 1 — Direct</span>
-                                <span id="scope1-val">3.30 t</span>
-                            </div>
-                            <div class="scope-bar-track">
-                                <div class="scope-bar-fill scope1-fill" id="scope1-bar" style="width: 11.3%;"></div>
-                            </div>
-                        </div>
-                        <div class="scope-row">
-                            <div class="scope-info">
-                                <span>Scope 2 — Energy</span>
-                                <span id="scope2-val">20.50 t</span>
-                            </div>
-                            <div class="scope-bar-track">
-                                <div class="scope-bar-fill scope2-fill" id="scope2-bar" style="width: 70.5%;"></div>
-                            </div>
-                        </div>
-                        <div class="scope-row">
-                            <div class="scope-info">
-                                <span>Scope 3 — Value chain</span>
-                                <span id="scope3-val">5.28 t</span>
-                            </div>
-                            <div class="scope-bar-track">
-                                <div class="scope-bar-fill scope3-fill" id="scope3-bar" style="width: 18.2%;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Target Reduction Indicator -->
-                    <div class="target-box">
-                        <div class="target-header">
-                            <svg class="target-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <circle cx="12" cy="12" r="6"></circle>
-                                <circle cx="12" cy="12" r="2"></circle>
-                            </svg>
-                            <span>30% Reduction Target</span>
-                        </div>
-                        <p class="target-text">To align with a science-based pathway, aim to reduce annual emissions to <strong id="target-val">20.35 tCO₂e</strong>.</p>
-                    </div>
-
-                    <!-- AI Insight Box -->
-                    <div class="insight-box">
-                        <div class="insight-header">
-                            <svg class="insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                            </svg>
-                            <span>AI Insight</span>
-                        </div>
-                        <p class="insight-text" id="insight-text">Electricity consumption contributes 71% of your emissions. Prioritise reduction initiatives here for maximum impact.</p>
-                    </div>
-
-                    <!-- Mitigation Scenario Simulator -->
-                    <div class="mitigation-simulator-box" style="background: rgba(16, 185, 129, 0.05); border: 1.5px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 16px; margin-top: 16px; text-align: left;">
-                        <div class="mitigation-header" style="display: flex; align-items: center; justify-content: space-between; font-weight: 700; color: #10b981; font-size: 0.9rem; margin-bottom: 10px;">
-                            <span style="display: flex; align-items: center; gap: 8px;">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                                Mitigation Simulator (Solar Shift)
-                            </span>
-                            <span class="savings-badge" id="savings-badge" style="background: #10b981; color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block;">Saved: 0.00 t</span>
-                        </div>
-                        <div class="simulator-slider-control">
-                            <label for="solar-mitigation-slider" style="font-size: 0.8rem; color: var(--text-secondary); display: flex; justify-content: space-between; margin-bottom: 6px;">
-                                <span>Renewable Electricity Share:</span>
-                                <strong id="solar-slider-val">0%</strong>
-                            </label>
-                            <input type="range" id="solar-mitigation-slider" min="0" max="100" value="0" style="width: 100%; height: 6px; background: rgba(0,0,0,0.08); border-radius: 3px; outline: none; -webkit-appearance: none; cursor: pointer; display: block;">
-                        </div>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
-                        <button class="btn btn-primary" id="recalculate-btn" style="width: 100%;">Recalculate</button>
-                        <button class="btn btn-secondary" id="export-esg-btn" style="width: 100%; background: transparent; border: 1.5px solid var(--primary); color: var(--primary); font-weight: 600; padding: 12px 20px; border-radius: 10px; cursor: pointer; transition: var(--transition);">Export Audit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Net-Zero Transition Planner & Forecast Section -->
     <section class="planner-section" id="planner">
@@ -1308,7 +1112,7 @@
                     <ul class="footer-links">
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About Platform</a></li>
-                        <li><a href="#calculator">Footprint Calculator</a></li>
+                        <li><a href="calculator.html">Footprint Calculator</a></li>
                         <li><a href="#methodology">Our Methodology</a></li>
                         <li><a href="#features">Core Features</a></li>
                         <li><a href="#privacy">Privacy Governance</a></li>
