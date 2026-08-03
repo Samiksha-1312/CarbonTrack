@@ -790,7 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const targetId = link.getAttribute('href');
                 const targetSec = document.querySelector(targetId);
                 if (targetSec) {
-                    const offset = 142; // Compensate for fixed header + sticky sub-navbar heights
+                    const offset = 80; // Compensate for only the main fixed header height
                     const bodyRect = document.body.getBoundingClientRect().top;
                     const elementRect = targetSec.getBoundingClientRect().top;
                     const elementPosition = elementRect - bodyRect;
@@ -800,38 +800,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         top: offsetPosition,
                         behavior: 'smooth'
                     });
+
+                    // Update active tab styling immediately on click
+                    subnavLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
                 }
             });
-        });
-
-        // Scroll listener to toggle active states
-        window.addEventListener('scroll', () => {
-            let currentSec = '';
-            const scrollPos = window.scrollY + 160;
-
-            // Edge case: bottom of the page
-            if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 60) {
-                currentSec = 'sec-trees';
-            } else {
-                navSections.forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        const top = el.offsetTop;
-                        if (scrollPos >= top) {
-                            currentSec = id;
-                        }
-                    }
-                });
-            }
-
-            if (currentSec) {
-                subnavLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${currentSec}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
         });
     }
 });

@@ -3724,9 +3724,7 @@ body.dark-theme .layout-preview-container .file-name-label {
    13. Calculator Sub-Navigation Strip Styles
    ========================================== */
 .calculator-subnav-wrapper {
-    position: sticky;
-    top: 76px;
-    z-index: 99;
+    position: relative;
     width: 100%;
     margin-bottom: 24px;
     transition: var(--transition);
@@ -3800,10 +3798,6 @@ body.dark-theme .subnav-link.active {
 }
 
 @media (max-width: 768px) {
-    .calculator-subnav-wrapper {
-        top: 66px; /* Adjust sticky top on smaller viewports */
-    }
-    
     .calculator-subnav {
         justify-content: flex-start;
         gap: 8px;
