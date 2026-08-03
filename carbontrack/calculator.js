@@ -46,6 +46,18 @@ document.addEventListener('DOMContentLoaded', () => {
         coconut: 10.00
     };
 
+    const WASTE_COEFFICIENTS = {
+        'paper': 1.37,
+        'plastic': 1.80,
+        'organic': 0.50,
+        'metal': 8.50,
+        'glass': 0.35,
+        'ewaste': 2.20,
+        'battery': 1.50,
+        'biomedical': 0.20,
+        'hazardous': 0.30
+    };
+
     // DOM Elements
     const vehicleContainer = document.getElementById('vehicle-rows-container');
     const energyContainer = document.getElementById('energy-rows-container');
@@ -53,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const paperContainer = document.getElementById('paper-rows-container');
     const treesContainer = document.getElementById('trees-rows-container');
     const solarContainer = document.getElementById('solar-rows-container');
+    const wasteContainer = document.getElementById('waste-rows-container');
 
     const btnAddVehicle = document.getElementById('btn-add-vehicle');
     const btnAddEnergy = document.getElementById('btn-add-energy');
@@ -60,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAddPaper = document.getElementById('btn-add-paper');
     const btnAddTree = document.getElementById('btn-add-tree');
     const btnAddSolar = document.getElementById('btn-add-solar');
+    const btnAddWaste = document.getElementById('btn-add-waste');
 
     // Toast utility (defined in script.js, fallback if not found)
     const showToastMsg = (msg, type = 'success') => {
@@ -548,6 +562,83 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================
+       6b. Waste Management Table Logic
+       ========================================== */
+    function createWasteRow(material = 'paper', qty = 0, location = '', customMaterial = '') {
+        const tr = document.createElement('tr');
+        const factor = WASTE_COEFFICIENTS[material] || 0;
+
+        tr.innerHTML = `
+            <td>
+                <div class="waste-type-wrapper" style="display: flex; flex-direction: column; gap: 4px;">
+                    <select class="waste-material">
+                        <option value="paper" ${material === 'paper' ? 'selected' : ''}>Paper Recycling</option>
+                        <option value="plastic" ${material === 'plastic' ? 'selected' : ''}>Plastic Recycling</option>
+                        <option value="organic" ${material === 'organic' ? 'selected' : ''}>Organic Waste (Composting)</option>
+                        <option value="metal" ${material === 'metal' ? 'selected' : ''}>Metal Recycling</option>
+                        <option value="glass" ${material === 'glass' ? 'selected' : ''}>Glass Recycling</option>
+                        <option value="ewaste" ${material === 'ewaste' ? 'selected' : ''}>E-Waste Recycling</option>
+                        <option value="battery" ${material === 'battery' ? 'selected' : ''}>Battery Recycling</option>
+                        <option value="biomedical" ${material === 'biomedical' ? 'selected' : ''}>Biomedical Waste Treatment</option>
+                        <option value="hazardous" ${material === 'hazardous' ? 'selected' : ''}>Hazardous/Chemical Disposal</option>
+                        <option value="other" ${material === 'other' ? 'selected' : ''}>Other</option>
+                    </select>
+                    <input type="text" class="waste-material-custom" placeholder="Type custom material..." value="${customMaterial}" style="${material === 'other' ? 'display: block;' : 'display: none;'} margin-top: 4px;">
+                </div>
+            </td>
+            <td><input type="text" class="waste-location" placeholder="Enter recycling facility..." value="${location}"></td>
+            <td><input type="number" class="waste-qty" value="${qty}" min="0"></td>
+            <td><input type="number" class="waste-factor readonly-input" value="${factor.toFixed(2)}" readonly></td>
+            <td class="waste-result">0.00</td>
+            <td>
+                <button class="btn-delete-row" title="Delete Row">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                </button>
+            </td>
+        `;
+
+        const selMaterial = tr.querySelector('.waste-material');
+        const inpCustomMat = tr.querySelector('.waste-material-custom');
+        const inpQty = tr.querySelector('.waste-qty');
+        const inpFactor = tr.querySelector('.waste-factor');
+
+        selMaterial.addEventListener('change', () => {
+            if (selMaterial.value === 'other') {
+                inpCustomMat.style.display = 'block';
+                inpCustomMat.focus();
+                inpFactor.value = (0).toFixed(2);
+            } else {
+                inpCustomMat.style.display = 'none';
+                inpCustomMat.value = '';
+                inpFactor.value = (WASTE_COEFFICIENTS[selMaterial.value] || 0).toFixed(2);
+            }
+            calculateWasteRow(tr);
+            calculateSummary();
+        });
+
+        inpQty.addEventListener('input', () => {
+            calculateWasteRow(tr);
+            calculateSummary();
+        });
+
+        tr.querySelector('.btn-delete-row').addEventListener('click', () => {
+            tr.remove();
+            calculateSummary();
+            showToastMsg('Waste recycling entry deleted.', 'info');
+        });
+
+        wasteContainer.appendChild(tr);
+        calculateWasteRow(tr);
+    }
+
+    function calculateWasteRow(row) {
+        const qty = parseFloat(row.querySelector('.waste-qty').value) || 0;
+        const factor = parseFloat(row.querySelector('.waste-factor').value) || 0;
+        const result = qty * factor;
+        row.querySelector('.waste-result').textContent = result.toFixed(2);
+    }
+
+    /* ==========================================
        7. Aggregate Calculations
        ========================================== */
     function calculateAll() {
@@ -558,6 +649,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Recalculate solar
         const sRows = solarContainer.querySelectorAll('tr');
         sRows.forEach(row => calculateSolarRow(row));
+
+        // Recalculate waste
+        const wRows = wasteContainer.querySelectorAll('tr');
+        wRows.forEach(row => calculateWasteRow(row));
 
         // Sync summary
         calculateSummary();
@@ -619,6 +714,14 @@ document.addEventListener('DOMContentLoaded', () => {
             offsetKg += count * fact; // kg CO2 / year
         });
 
+        // 7. Waste Recycling offset (kg CO2 / year)
+        const wRows = wasteContainer.querySelectorAll('tr');
+        wRows.forEach(row => {
+            const qty = parseFloat(row.querySelector('.waste-qty').value) || 0;
+            const fact = parseFloat(row.querySelector('.waste-factor').value) || 0;
+            offsetKg += qty * fact; // kg CO2 / year
+        });
+
         // Convert to tonnes
         const grossTons = grossKg / 1000;
         const offsetsTons = offsetKg / 1000;
@@ -669,6 +772,12 @@ document.addEventListener('DOMContentLoaded', () => {
         showToastMsg('Added new solar installation row.', 'success');
     });
 
+    btnAddWaste.addEventListener('click', (e) => {
+        e.preventDefault();
+        createWasteRow('paper', 0, '');
+        showToastMsg('Added new waste recycling row.', 'success');
+    });
+
     document.getElementById('btn-calculate-energy').addEventListener('click', (e) => {
         e.preventDefault();
         calculateSummary();
@@ -705,6 +814,12 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         calculateSummary();
         showToastMsg('Tree absorption offsets calculated.', 'success');
+    });
+
+    document.getElementById('btn-calculate-waste').addEventListener('click', (e) => {
+        e.preventDefault();
+        calculateAll();
+        showToastMsg('Waste recycling offsets calculated.', 'success');
     });
 
     document.getElementById('btn-recalculate-all').addEventListener('click', (e) => {
@@ -825,6 +940,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createPaperRow('standard-a4', 15000, 'exams');
     createSolarRow('girls-hostel', 'geyser', 2500);
     createTreeRow('neem', 50, 'Main Garden');
+    createWasteRow('paper', 1200, 'Main Admin Office');
 
     // Initial run
     calculateAll();

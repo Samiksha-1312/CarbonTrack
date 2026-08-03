@@ -205,6 +205,7 @@
                         <a href="#sec-paper" class="subnav-link" data-sec="sec-paper">Paper</a>
                         <a href="#sec-solar" class="subnav-link" data-sec="sec-solar">Solar</a>
                         <a href="#sec-trees" class="subnav-link" data-sec="sec-trees">Trees</a>
+                        <a href="#sec-waste" class="subnav-link" data-sec="sec-waste">Waste</a>
                     </nav>
                 </div>
 
@@ -522,6 +523,56 @@
                                     <span>+ Add Another Entry</span>
                                 </button>
                                 <button class="btn btn-primary" id="btn-calculate-trees">Calculate All Entries</button>
+                            </div>
+                        </div>
+                    </div>
+                <!-- 8. Waste Management & Recycling Card -->
+                <div class="calc-card glass-card scroll-reveal" id="sec-waste">
+                    <div class="calc-card-header">
+                        <div class="header-icon-box bg-purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </div>
+                        <div class="header-titles">
+                            <h3 style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                Waste Management & Recycling
+                                <span class="init-scope-badge offset">Carbon Offset</span>
+                            </h3>
+                            <p>Calculate emissions offsets from recycling and proper waste treatment</p>
+                        </div>
+                    </div>
+                    <div class="calc-card-body">
+                        <div class="nested-form-section">
+                            <h4 class="nested-title">Waste Recycling - Interactive Form</h4>
+                            <p class="nested-subtitle">Enter waste details - recycling avoids lifecycle emissions</p>
+
+                            <div class="table-container" style="margin-top: 16px;">
+                                <table class="calc-table" id="waste-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Material Type</th>
+                                            <th>Recycling Facility / Location</th>
+                                            <th>Quantity Recycled (kg/year)</th>
+                                            <th>Offset Factor (kgCO₂/kg)</th>
+                                            <th>Total Offset (kgCO₂ Saved)</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="waste-rows-container">
+                                        <!-- Dynamic rows inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="form-actions-row" style="margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap;">
+                                <button class="btn btn-add" id="btn-add-waste">
+                                    <span>+ Add Recycle Entry</span>
+                                </button>
+                                <button class="btn btn-primary" id="btn-calculate-waste">Calculate Waste Offset</button>
                             </div>
                         </div>
                     </div>
