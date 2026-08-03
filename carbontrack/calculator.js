@@ -83,7 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==========================================
        1. Vehicle Table Logic
        ========================================== */
-    function createVehicleRow(type = 'car', fuel = 'petrol', count = 1, distance = 0) {
+    function createVehicleRow(type = 'car', fuel = 'petrol', count = 1, distance = 0, ownership = 'institute-owned') {
+        if (fuel === 'hybrid') fuel = 'petrol';
         const tr = document.createElement('tr');
         const factor = VEHICLE_COEFFICIENTS[type][fuel];
 
@@ -104,7 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <option value="diesel" ${fuel === 'diesel' ? 'selected' : ''}>Diesel</option>
                     <option value="cng" ${fuel === 'cng' ? 'selected' : ''}>CNG</option>
                     <option value="electric" ${fuel === 'electric' ? 'selected' : ''}>Electric</option>
-                    <option value="hybrid" ${fuel === 'hybrid' ? 'selected' : ''}>Hybrid</option>
+                </select>
+            </td>
+            <td>
+                <select class="vehicle-ownership">
+                    <option value="institute-owned" ${ownership === 'institute-owned' ? 'selected' : ''}>Institute Owned</option>
+                    <option value="staff-owned" ${ownership === 'staff-owned' ? 'selected' : ''}>Staff Owned</option>
+                    <option value="student-owned" ${ownership === 'student-owned' ? 'selected' : ''}>Student Owned</option>
+                    <option value="other" ${ownership === 'other' ? 'selected' : ''}>Other</option>
                 </select>
             </td>
             <td class="row-scope-col vehicle-scope">
@@ -124,9 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
             </td>
         `;
 
-        // Event listener for type or fuel change
+        // Event listener for type, fuel or ownership change
         const selType = tr.querySelector('.vehicle-type');
         const selFuel = tr.querySelector('.fuel-type');
+        const selOwnership = tr.querySelector('.vehicle-ownership');
         const inpCount = tr.querySelector('.vehicle-count');
         const inpDist = tr.querySelector('.vehicle-distance');
         const inpFactor = tr.querySelector('.vehicle-factor');
@@ -134,17 +143,22 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateFactor() {
             const t = selType.value;
             const f = selFuel.value;
+            const own = selOwnership.value;
             
             // Adjust fuel options based on vehicle type
             const fact = VEHICLE_COEFFICIENTS[t][f] !== undefined ? VEHICLE_COEFFICIENTS[t][f] : 0;
             inpFactor.value = fact.toFixed(2);
             
-            // Update Scope cell dynamically
+            // Update Scope cell dynamically based on ownership and fuel
             const scopeCell = tr.querySelector('.vehicle-scope');
-            if (f === 'electric') {
-                scopeCell.innerHTML = `<span class="init-scope-badge scope2">Scope 2</span>`;
+            if (own === 'institute-owned') {
+                if (f === 'electric') {
+                    scopeCell.innerHTML = `<span class="init-scope-badge scope2">Scope 2</span>`;
+                } else {
+                    scopeCell.innerHTML = `<span class="init-scope-badge scope1">Scope 1</span>`;
+                }
             } else {
-                scopeCell.innerHTML = `<span class="init-scope-badge scope1">Scope 1</span>`;
+                scopeCell.innerHTML = `<span class="init-scope-badge scope3">Scope 3</span>`;
             }
             
             calculateVehicleRow(tr);
@@ -152,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         selType.addEventListener('change', updateFactor);
         selFuel.addEventListener('change', updateFactor);
+        selOwnership.addEventListener('change', updateFactor);
         inpCount.addEventListener('input', () => calculateVehicleRow(tr));
         inpDist.addEventListener('input', () => calculateVehicleRow(tr));
 
@@ -161,11 +176,15 @@ document.addEventListener('DOMContentLoaded', () => {
             showToastMsg('Vehicle entry deleted.', 'info');
         });
 
-        // Set initial scope state
-        if (fuel === 'electric') {
-            tr.querySelector('.vehicle-scope').innerHTML = `<span class="init-scope-badge scope2">Scope 2</span>`;
+        // Set initial scope state based on ownership and fuel
+        if (ownership === 'institute-owned') {
+            if (fuel === 'electric') {
+                tr.querySelector('.vehicle-scope').innerHTML = `<span class="init-scope-badge scope2">Scope 2</span>`;
+            } else {
+                tr.querySelector('.vehicle-scope').innerHTML = `<span class="init-scope-badge scope1">Scope 1</span>`;
+            }
         } else {
-            tr.querySelector('.vehicle-scope').innerHTML = `<span class="init-scope-badge scope1">Scope 1</span>`;
+            tr.querySelector('.vehicle-scope').innerHTML = `<span class="init-scope-badge scope3">Scope 3</span>`;
         }
 
         vehicleContainer.appendChild(tr);
@@ -502,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
        ========================================== */
     btnAddVehicle.addEventListener('click', (e) => {
         e.preventDefault();
-        createVehicleRow('car', 'petrol', 1, 0);
+        createVehicleRow('car', 'petrol', 1, 0, 'institute-owned');
         showToastMsg('Added new vehicle row.', 'success');
     });
 
@@ -680,7 +699,7 @@ document.addEventListener('DOMContentLoaded', () => {
        9. Initialization
        ========================================== */
     // Insert initial rows on load
-    createVehicleRow('car', 'petrol', 1, 10);
+    createVehicleRow('car', 'petrol', 1, 10, 'institute-owned');
     createEnergyRow('purchased-grid', 12000);
     createLpgRow('girls-hostel-mess', 2.5);
     createPaperRow('standard-a4', 15000);
