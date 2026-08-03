@@ -738,4 +738,63 @@ document.addEventListener('DOMContentLoaded', () => {
             showToastMsg('Layout plan removed.', 'info');
         });
     }
+
+    /* ==========================================
+       11. Calculator Sub-Navigation Logic
+       ========================================== */
+    const subnavLinks = document.querySelectorAll('.subnav-link');
+    const navSections = ['sec-vehicle', 'sec-energy', 'sec-lpg', 'sec-paper', 'sec-solar', 'sec-trees'];
+
+    if (subnavLinks.length > 0) {
+        // Smooth scroll trigger
+        subnavLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSec = document.querySelector(targetId);
+                if (targetSec) {
+                    const offset = 142; // Compensate for fixed header + sticky sub-navbar heights
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = targetSec.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Scroll listener to toggle active states
+        window.addEventListener('scroll', () => {
+            let currentSec = '';
+            const scrollPos = window.scrollY + 160;
+
+            // Edge case: bottom of the page
+            if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 60) {
+                currentSec = 'sec-trees';
+            } else {
+                navSections.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        const top = el.offsetTop;
+                        if (scrollPos >= top) {
+                            currentSec = id;
+                        }
+                    }
+                });
+            }
+
+            if (currentSec) {
+                subnavLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSec}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
 });
