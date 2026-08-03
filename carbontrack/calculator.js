@@ -107,6 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <option value="hybrid" ${fuel === 'hybrid' ? 'selected' : ''}>Hybrid</option>
                 </select>
             </td>
+            <td class="row-scope-col vehicle-scope">
+                <span class="init-scope-badge scope1">Scope 1</span>
+            </td>
             <td><input type="number" class="vehicle-count" value="${count}" min="1"></td>
             <td><input type="number" class="vehicle-distance" value="${distance}" min="0"></td>
             <td><input type="number" class="vehicle-factor readonly-input" value="${factor.toFixed(2)}" readonly></td>
@@ -132,9 +135,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const t = selType.value;
             const f = selFuel.value;
             
-            // Adjust fuel options based on vehicle type (e.g. bikes don't run on diesel in normal context, but let's keep it safe)
+            // Adjust fuel options based on vehicle type
             const fact = VEHICLE_COEFFICIENTS[t][f] !== undefined ? VEHICLE_COEFFICIENTS[t][f] : 0;
             inpFactor.value = fact.toFixed(2);
+            
+            // Update Scope cell dynamically
+            const scopeCell = tr.querySelector('.vehicle-scope');
+            if (f === 'electric') {
+                scopeCell.innerHTML = `<span class="init-scope-badge scope2">Scope 2</span>`;
+            } else {
+                scopeCell.innerHTML = `<span class="init-scope-badge scope1">Scope 1</span>`;
+            }
+            
             calculateVehicleRow(tr);
         }
 
@@ -148,6 +160,13 @@ document.addEventListener('DOMContentLoaded', () => {
             calculateAll();
             showToastMsg('Vehicle entry deleted.', 'info');
         });
+
+        // Set initial scope state
+        if (fuel === 'electric') {
+            tr.querySelector('.vehicle-scope').innerHTML = `<span class="init-scope-badge scope2">Scope 2</span>`;
+        } else {
+            tr.querySelector('.vehicle-scope').innerHTML = `<span class="init-scope-badge scope1">Scope 1</span>`;
+        }
 
         vehicleContainer.appendChild(tr);
         calculateVehicleRow(tr);
@@ -192,6 +211,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>
                 <input type="text" class="energy-source" value="${type === 'purchased-grid' ? 'Grid utility' : 'On-site generator'}">
             </td>
+            <td class="row-scope-col energy-scope">
+                <span class="init-scope-badge scope2">Scope 2</span>
+            </td>
             <td><input type="number" class="energy-consumption" value="${consumption}" min="0"></td>
             <td>
                 <select class="energy-unit">
@@ -222,13 +244,28 @@ document.addEventListener('DOMContentLoaded', () => {
             if (selType.value === 'purchased-grid') inpSource.value = 'Grid utility';
             else if (selType.value === 'solar-power' || selType.value === 'wind-power') inpSource.value = 'Clean renewable';
             else inpSource.value = 'Generator fuel';
+
+            // Update Scope badge dynamically
+            const scopeCell = tr.querySelector('.energy-scope');
+            const val = selType.value;
+            if (val === 'diesel-generator') {
+                scopeCell.innerHTML = `<span class="init-scope-badge scope1">Scope 1</span>`;
+            } else if (val === 'solar-power' || val === 'wind-power') {
+                scopeCell.innerHTML = `<span class="init-scope-badge offset">Offset</span>`;
+            } else {
+                scopeCell.innerHTML = `<span class="init-scope-badge scope2">Scope 2</span>`;
+            }
         });
 
-        tr.querySelector('.btn-delete-row').addEventListener('click', () => {
-            tr.remove();
-            calculateSummary();
-            showToastMsg('Energy source entry deleted.', 'info');
-        });
+        // Set initial Scope badge
+        const scopeCell = tr.querySelector('.energy-scope');
+        if (type === 'diesel-generator') {
+            scopeCell.innerHTML = `<span class="init-scope-badge scope1">Scope 1</span>`;
+        } else if (type === 'solar-power' || type === 'wind-power') {
+            scopeCell.innerHTML = `<span class="init-scope-badge offset">Offset</span>`;
+        } else {
+            scopeCell.innerHTML = `<span class="init-scope-badge scope2">Scope 2</span>`;
+        }
 
         energyContainer.appendChild(tr);
     }

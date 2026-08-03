@@ -3814,3 +3814,25 @@ body.dark-theme .subnav-link.active {
         font-size: 0.85rem;
     }
 }
+
+/* ==========================================
+   14. Scope Badge Enhancements
+   ========================================== */
+.init-scope-badge.offset {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.calc-table td .init-scope-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.row-scope-col {
+    width: 90px;
+    min-width: 90px;
+    text-align: center;
+}
