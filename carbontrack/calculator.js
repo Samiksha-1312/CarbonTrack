@@ -637,4 +637,105 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial run
     calculateAll();
+
+    /* ==========================================
+       10. Organization Logo & Photo Live Previews
+       ========================================== */
+    const logoInput = document.getElementById('org-logo-file');
+    const logoPlaceholder = document.getElementById('logo-placeholder');
+    const logoPreviewBox = document.getElementById('logo-preview-box');
+    const logoPreviewImg = document.getElementById('logo-preview-img');
+    const btnRemoveLogo = document.getElementById('btn-remove-logo');
+
+    if (logoInput) {
+        logoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    logoPreviewImg.src = event.target.result;
+                    logoPlaceholder.style.display = 'none';
+                    logoPreviewBox.style.display = 'flex';
+                    showToastMsg('Logo uploaded successfully.', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    if (btnRemoveLogo) {
+        btnRemoveLogo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            logoInput.value = '';
+            logoPreviewImg.src = '';
+            logoPreviewBox.style.display = 'none';
+            logoPlaceholder.style.display = 'flex';
+            showToastMsg('Logo removed.', 'info');
+        });
+    }
+
+    const photoInput = document.getElementById('org-photo-file');
+    const photoPlaceholder = document.getElementById('photo-placeholder');
+    const photoPreviewBox = document.getElementById('photo-preview-box');
+    const photoPreviewImg = document.getElementById('photo-preview-img');
+    const btnRemovePhoto = document.getElementById('btn-remove-photo');
+
+    if (photoInput) {
+        photoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    photoPreviewImg.src = event.target.result;
+                    photoPlaceholder.style.display = 'none';
+                    photoPreviewBox.style.display = 'flex';
+                    showToastMsg('College photo uploaded successfully.', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    if (btnRemovePhoto) {
+        btnRemovePhoto.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            photoInput.value = '';
+            photoPreviewImg.src = '';
+            photoPreviewBox.style.display = 'none';
+            photoPlaceholder.style.display = 'flex';
+            showToastMsg('College photo removed.', 'info');
+        });
+    }
+
+    const layoutInput = document.getElementById('org-layout-file');
+    const layoutPlaceholder = document.getElementById('layout-placeholder');
+    const layoutPreviewBox = document.getElementById('layout-preview-box');
+    const layoutFileName = document.getElementById('layout-file-name');
+    const btnRemoveLayout = document.getElementById('btn-remove-layout');
+
+    if (layoutInput) {
+        layoutInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                layoutFileName.textContent = file.name;
+                layoutPlaceholder.style.display = 'none';
+                layoutPreviewBox.style.display = 'flex';
+                showToastMsg('Layout plan file loaded.', 'success');
+            }
+        });
+    }
+
+    if (btnRemoveLayout) {
+        btnRemoveLayout.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            layoutInput.value = '';
+            layoutFileName.textContent = '';
+            layoutPreviewBox.style.display = 'none';
+            layoutPlaceholder.style.display = 'flex';
+            showToastMsg('Layout plan removed.', 'info');
+        });
+    }
 });

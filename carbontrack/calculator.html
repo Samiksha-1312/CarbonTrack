@@ -141,6 +141,57 @@
                                 <label for="org-population">Population</label>
                                 <input type="number" id="org-population" placeholder="Enter population" min="0">
                             </div>
+                            <div class="form-control">
+                                <label for="org-website">Website Details</label>
+                                <input type="url" id="org-website" placeholder="Enter website URL (e.g., https://college.edu)">
+                            </div>
+                            <div class="form-control">
+                                <label for="org-google-maps">Google Location Link</label>
+                                <input type="url" id="org-google-maps" placeholder="Enter Google Maps location link">
+                            </div>
+                            <div class="form-control file-upload-control">
+                                <label>Logo Upload</label>
+                                <div class="custom-file-upload">
+                                    <input type="file" id="org-logo-file" accept="image/*">
+                                    <div class="upload-placeholder" id="logo-placeholder">
+                                        <span class="upload-icon">📁</span>
+                                        <span class="upload-text">Choose Logo</span>
+                                    </div>
+                                    <div class="logo-preview-container" id="logo-preview-box" style="display: none;">
+                                        <img id="logo-preview-img" src="" alt="Logo Preview">
+                                        <button class="remove-preview-btn" id="btn-remove-logo" type="button">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-control file-upload-control">
+                                <label>College Photo</label>
+                                <div class="custom-file-upload">
+                                    <input type="file" id="org-photo-file" accept="image/*">
+                                    <div class="upload-placeholder" id="photo-placeholder">
+                                        <span class="upload-icon">📷</span>
+                                        <span class="upload-text">Choose Photo</span>
+                                    </div>
+                                    <div class="photo-preview-container" id="photo-preview-box" style="display: none;">
+                                        <img id="photo-preview-img" src="" alt="College Photo Preview">
+                                        <button class="remove-preview-btn" id="btn-remove-photo" type="button">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-control file-upload-control">
+                                <label>Campus Layout Plan</label>
+                                <div class="custom-file-upload">
+                                    <input type="file" id="org-layout-file" accept="image/*,application/pdf">
+                                    <div class="upload-placeholder" id="layout-placeholder">
+                                        <span class="upload-icon">🗺️</span>
+                                        <span class="upload-text">Choose Layout</span>
+                                    </div>
+                                    <div class="layout-preview-container" id="layout-preview-box" style="display: none;">
+                                        <span class="file-icon">📄</span>
+                                        <span id="layout-file-name" class="file-name-label">Layout File</span>
+                                        <button class="remove-preview-btn" id="btn-remove-layout" type="button">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
