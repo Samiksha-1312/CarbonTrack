@@ -520,6 +520,28 @@
                     </div>
                 </div>
 
+                <!-- Summary Dashboard Widget (Static Card) -->
+                <div class="sticky-summary-widget shadow-reveal" id="summary-widget">
+                    <div class="summary-widget-container">
+                        <div class="summary-stat-box">
+                            <span class="stat-label">Gross Emissions</span>
+                            <span class="stat-value text-red" id="summary-gross">0.00 <span class="stat-unit">tCO₂e/yr</span></span>
+                        </div>
+                        <div class="summary-stat-box">
+                            <span class="stat-label">Clean Offsets</span>
+                            <span class="stat-value text-green" id="summary-offsets">0.00 <span class="stat-unit">tCO₂e/yr</span></span>
+                        </div>
+                        <div class="summary-stat-box highlight">
+                            <span class="stat-label">Net Carbon Footprint</span>
+                            <span class="stat-value" id="summary-net">0.00 <span class="stat-unit">tCO₂e/yr</span></span>
+                        </div>
+                        <div class="summary-actions">
+                            <button class="btn btn-primary" id="btn-recalculate-all">Recalculate All</button>
+                            <button class="btn btn-secondary" id="btn-export-full-report">Export Summary Report</button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 8. Calculation Formulas Card -->
                 <div class="calc-card glass-card scroll-reveal">
                     <div class="calc-card-header">
@@ -558,29 +580,7 @@
         </div>
     </section>
 
-    <!-- Floating Summary Dashboard Widget (Sticky at the bottom) -->
-    <div class="sticky-summary-widget shadow-reveal" id="summary-widget">
-        <div class="container">
-            <div class="summary-widget-container">
-                <div class="summary-stat-box">
-                    <span class="stat-label">Gross Emissions</span>
-                    <span class="stat-value text-red" id="summary-gross">0.00 <span class="stat-unit">tCO₂e/yr</span></span>
-                </div>
-                <div class="summary-stat-box">
-                    <span class="stat-label">Clean Offsets</span>
-                    <span class="stat-value text-green" id="summary-offsets">0.00 <span class="stat-unit">tCO₂e/yr</span></span>
-                </div>
-                <div class="summary-stat-box highlight">
-                    <span class="stat-label">Net Carbon Footprint</span>
-                    <span class="stat-value" id="summary-net">0.00 <span class="stat-unit">tCO₂e/yr</span></span>
-                </div>
-                <div class="summary-actions">
-                    <button class="btn btn-primary" id="btn-recalculate-all">Recalculate All</button>
-                    <button class="btn btn-secondary" id="btn-export-full-report">Export Summary Report</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Toast Notification System -->
     <div class="toast-container" id="toast-container"></div>
