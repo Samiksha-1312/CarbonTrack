@@ -367,20 +367,23 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==========================================
        5. Green Cover / Trees Table Logic
        ========================================== */
-    function createTreeRow(species = 'neem', count = 0) {
+    function createTreeRow(species = 'neem', count = 0, location = '') {
         const tr = document.createElement('tr');
         const factor = TREE_ABSORPTION[species];
 
         tr.innerHTML = `
             <td>
-                <select class="tree-species">
-                    <option value="neem" ${species === 'neem' ? 'selected' : ''}>Neem Tree</option>
-                    <option value="banyan" ${species === 'banyan' ? 'selected' : ''}>Banyan Tree</option>
-                    <option value="peepal" ${species === 'peepal' ? 'selected' : ''}>Peepal Tree</option>
-                    <option value="mango" ${species === 'mango' ? 'selected' : ''}>Mango Tree</option>
-                    <option value="teak" ${species === 'teak' ? 'selected' : ''}>Teak Tree</option>
-                    <option value="coconut" ${species === 'coconut' ? 'selected' : ''}>Coconut Tree</option>
-                </select>
+                <div class="tree-type-wrapper" style="display: flex; flex-direction: column; gap: 4px;">
+                    <select class="tree-species">
+                        <option value="neem" ${species === 'neem' ? 'selected' : ''}>Neem Tree</option>
+                        <option value="banyan" ${species === 'banyan' ? 'selected' : ''}>Banyan Tree</option>
+                        <option value="peepal" ${species === 'peepal' ? 'selected' : ''}>Peepal Tree</option>
+                        <option value="mango" ${species === 'mango' ? 'selected' : ''}>Mango Tree</option>
+                        <option value="teak" ${species === 'teak' ? 'selected' : ''}>Teak Tree</option>
+                        <option value="coconut" ${species === 'coconut' ? 'selected' : ''}>Coconut Tree</option>
+                    </select>
+                    <input type="text" class="tree-location" placeholder="Enter tree location..." value="${location}" style="margin-top: 4px;">
+                </div>
             </td>
             <td><input type="number" class="tree-count" value="${count}" min="0"></td>
             <td><input type="number" class="tree-factor readonly-input" value="${factor.toFixed(2)}" readonly></td>
@@ -523,7 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnAddTree.addEventListener('click', (e) => {
         e.preventDefault();
-        createTreeRow('neem', 0);
+        createTreeRow('neem', 0, '');
         showToastMsg('Added new tree plantation row.', 'success');
     });
 
@@ -681,7 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createEnergyRow('purchased-grid', 12000);
     createLpgRow('girls-hostel-mess', 2.5);
     createPaperRow('standard-a4', 15000);
-    createTreeRow('neem', 50);
+    createTreeRow('neem', 50, 'Main Garden');
 
     // Initial run
     calculateAll();
