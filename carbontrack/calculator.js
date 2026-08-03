@@ -52,12 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const lpgContainer = document.getElementById('lpg-rows-container');
     const paperContainer = document.getElementById('paper-rows-container');
     const treesContainer = document.getElementById('trees-rows-container');
+    const solarContainer = document.getElementById('solar-rows-container');
 
     const btnAddVehicle = document.getElementById('btn-add-vehicle');
     const btnAddEnergy = document.getElementById('btn-add-energy');
     const btnAddLpg = document.getElementById('btn-add-lpg');
     const btnAddPaper = document.getElementById('btn-add-paper');
     const btnAddTree = document.getElementById('btn-add-tree');
+    const btnAddSolar = document.getElementById('btn-add-solar');
 
     // Toast utility (defined in script.js, fallback if not found)
     const showToastMsg = (msg, type = 'success') => {
@@ -455,7 +457,98 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================
-       6. Aggregate Calculations
+       6. Solar Energy Table Logic
+       ========================================== */
+    function createSolarRow(location = 'girls-hostel', usage = 'geyser', capacity = 0, customLocation = '', customUsage = '') {
+        const tr = document.createElement('tr');
+        const factor = 0.792; // Standard Solar offset emission factor
+
+        tr.innerHTML = `
+            <td>
+                <div class="solar-location-wrapper" style="display: flex; flex-direction: column; gap: 4px;">
+                    <select class="solar-location">
+                        <option value="canteen" ${location === 'canteen' ? 'selected' : ''}>Canteen</option>
+                        <option value="girls-hostel" ${location === 'girls-hostel' ? 'selected' : ''}>Girls Hostel</option>
+                        <option value="boys-hostel" ${location === 'boys-hostel' ? 'selected' : ''}>Boys Hostel</option>
+                        <option value="main-building" ${location === 'main-building' ? 'selected' : ''}>Main Building</option>
+                        <option value="guest-house" ${location === 'guest-house' ? 'selected' : ''}>Guest House</option>
+                        <option value="other" ${location === 'other' ? 'selected' : ''}>Other</option>
+                    </select>
+                    <input type="text" class="solar-location-custom" placeholder="Type custom building..." value="${customLocation}" style="${location === 'other' ? 'display: block;' : 'display: none;'} margin-top: 4px;">
+                </div>
+            </td>
+            <td>
+                <div class="solar-usage-wrapper" style="display: flex; flex-direction: column; gap: 4px;">
+                    <select class="solar-usage">
+                        <option value="geyser" ${usage === 'geyser' ? 'selected' : ''}>Water Heater (Geyser)</option>
+                        <option value="lighting" ${usage === 'lighting' ? 'selected' : ''}>Lighting</option>
+                        <option value="grid-feed" ${usage === 'grid-feed' ? 'selected' : ''}>Grid Feed-in</option>
+                        <option value="lab-power" ${usage === 'lab-power' ? 'selected' : ''}>Lab Power</option>
+                        <option value="other" ${usage === 'other' ? 'selected' : ''}>Other</option>
+                    </select>
+                    <input type="text" class="solar-usage-custom" placeholder="Type custom usage..." value="${customUsage}" style="${usage === 'other' ? 'display: block;' : 'display: none;'} margin-top: 4px;">
+                </div>
+            </td>
+            <td><input type="number" class="solar-capacity" value="${capacity}" min="0"></td>
+            <td><input type="number" class="solar-factor readonly-input" value="${factor.toFixed(3)}" readonly></td>
+            <td class="solar-result">0.00</td>
+            <td>
+                <button class="btn-delete-row" title="Delete Row">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                </button>
+            </td>
+        `;
+
+        const selLocation = tr.querySelector('.solar-location');
+        const inpCustomLoc = tr.querySelector('.solar-location-custom');
+        const selUsage = tr.querySelector('.solar-usage');
+        const inpCustomUse = tr.querySelector('.solar-usage-custom');
+        const inpCapacity = tr.querySelector('.solar-capacity');
+
+        selLocation.addEventListener('change', () => {
+            if (selLocation.value === 'other') {
+                inpCustomLoc.style.display = 'block';
+                inpCustomLoc.focus();
+            } else {
+                inpCustomLoc.style.display = 'none';
+                inpCustomLoc.value = '';
+            }
+        });
+
+        selUsage.addEventListener('change', () => {
+            if (selUsage.value === 'other') {
+                inpCustomUse.style.display = 'block';
+                inpCustomUse.focus();
+            } else {
+                inpCustomUse.style.display = 'none';
+                inpCustomUse.value = '';
+            }
+        });
+
+        inpCapacity.addEventListener('input', () => {
+            calculateSolarRow(tr);
+            calculateSummary();
+        });
+
+        tr.querySelector('.btn-delete-row').addEventListener('click', () => {
+            tr.remove();
+            calculateSummary();
+            showToastMsg('Solar entry deleted.', 'info');
+        });
+
+        solarContainer.appendChild(tr);
+        calculateSolarRow(tr);
+    }
+
+    function calculateSolarRow(row) {
+        const capacity = parseFloat(row.querySelector('.solar-capacity').value) || 0;
+        const ef = parseFloat(row.querySelector('.solar-factor').value) || 0.792;
+        const result = capacity * ef;
+        row.querySelector('.solar-result').textContent = result.toFixed(2);
+    }
+
+    /* ==========================================
+       7. Aggregate Calculations
        ========================================== */
     function calculateAll() {
         // Recalculate vehicles
@@ -463,17 +556,10 @@ document.addEventListener('DOMContentLoaded', () => {
         vRows.forEach(row => calculateVehicleRow(row));
 
         // Recalculate solar
-        calculateSolar();
+        const sRows = solarContainer.querySelectorAll('tr');
+        sRows.forEach(row => calculateSolarRow(row));
 
         // Sync summary
-        calculateSummary();
-    }
-
-    function calculateSolar() {
-        const capacity = parseFloat(document.getElementById('solar-capacity').value) || 0;
-        const ef = parseFloat(document.getElementById('solar-ef').value) || 0.792;
-        const result = capacity * ef;
-        document.getElementById('solar-result').textContent = result.toFixed(2);
         calculateSummary();
     }
 
@@ -518,9 +604,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 5. Solar offset (kg CO2)
-        const solarCapacity = parseFloat(document.getElementById('solar-capacity').value) || 0;
-        const solarEf = parseFloat(document.getElementById('solar-ef').value) || 0.792;
-        offsetKg += solarCapacity * solarEf;
+        const sRows = solarContainer.querySelectorAll('tr');
+        sRows.forEach(row => {
+            const cap = parseFloat(row.querySelector('.solar-capacity').value) || 0;
+            const fact = parseFloat(row.querySelector('.solar-factor').value) || 0;
+            offsetKg += cap * fact;
+        });
 
         // 6. Tree offsets (kg CO2 / year)
         const tRows = treesContainer.querySelectorAll('tr');
@@ -574,6 +663,12 @@ document.addEventListener('DOMContentLoaded', () => {
         showToastMsg('Added new tree plantation row.', 'success');
     });
 
+    btnAddSolar.addEventListener('click', (e) => {
+        e.preventDefault();
+        createSolarRow('girls-hostel', 'geyser', 0);
+        showToastMsg('Added new solar installation row.', 'success');
+    });
+
     document.getElementById('btn-calculate-energy').addEventListener('click', (e) => {
         e.preventDefault();
         calculateSummary();
@@ -602,7 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-calculate-solar').addEventListener('click', (e) => {
         e.preventDefault();
-        calculateSolar();
+        calculateAll();
         showToastMsg('Solar clean offsets calculated.', 'success');
     });
 
@@ -728,6 +823,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createEnergyRow('purchased-grid', 12000);
     createLpgRow('girls-hostel-mess', 2.5);
     createPaperRow('standard-a4', 15000, 'exams');
+    createSolarRow('girls-hostel', 'geyser', 2500);
     createTreeRow('neem', 50, 'Main Garden');
 
     // Initial run

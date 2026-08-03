@@ -450,22 +450,28 @@
                             <h4 class="nested-title">Solar Energy System - Interactive Form</h4>
                             <p class="nested-subtitle">Enter solar panel capacity - emissions offset calculation</p>
                             
-                            <div class="calculator-form-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 16px; align-items: flex-end;">
-                                <div class="form-control">
-                                    <label for="solar-capacity">Solar Panel Capacity (kWh)</label>
-                                    <input type="number" id="solar-capacity" value="0" min="0">
-                                </div>
-                                <div class="form-control">
-                                    <label for="solar-ef">Emission Factor</label>
-                                    <input type="number" id="solar-ef" value="0.792" readonly class="readonly-input">
-                                </div>
-                                <div class="form-control">
-                                    <label for="solar-result">Result (kgCO₂ Saved)</label>
-                                    <div class="result-display-box" id="solar-result">0.00</div>
-                                </div>
+                            <div class="table-container" style="margin-top: 16px;">
+                                <table class="calc-table" id="solar-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Location (Building)</th>
+                                            <th>Usage / Application</th>
+                                            <th>Panel Capacity (kWh)</th>
+                                            <th>Emission Factor</th>
+                                            <th>Avoided Emissions (kgCO₂ Saved)</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="solar-rows-container">
+                                        <!-- Dynamic rows inserted here -->
+                                    </tbody>
+                                </table>
                             </div>
 
-                            <div class="form-actions-row" style="margin-top: 16px;">
+                            <div class="form-actions-row" style="margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap;">
+                                <button class="btn btn-add" id="btn-add-solar">
+                                    <span>+ Add Another Entry</span>
+                                </button>
                                 <button class="btn btn-primary" id="btn-calculate-solar">Calculate Solar Offset</button>
                             </div>
                         </div>
