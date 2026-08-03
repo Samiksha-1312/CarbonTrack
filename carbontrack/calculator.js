@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==========================================
        4. Paper Table Logic
        ========================================== */
-    function createPaperRow(type = 'standard-a4', qty = 0) {
+    function createPaperRow(type = 'standard-a4', qty = 0, purpose = 'exams', customPurpose = '') {
         const tr = document.createElement('tr');
         const factor = PAPER_COEFFICIENTS[type];
 
@@ -357,6 +357,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     <option value="office-paper-kg" ${type === 'office-paper-kg' ? 'selected' : ''}>Office Paper (kg)</option>
                 </select>
             </td>
+            <td>
+                <div class="paper-purpose-wrapper" style="display: flex; flex-direction: column; gap: 4px;">
+                    <select class="paper-purpose">
+                        <option value="exams" ${purpose === 'exams' ? 'selected' : ''}>Exams</option>
+                        <option value="assignments" ${purpose === 'assignments' ? 'selected' : ''}>Assignments</option>
+                        <option value="lab-manuals" ${purpose === 'lab-manuals' ? 'selected' : ''}>Lab Manuals</option>
+                        <option value="admin-office" ${purpose === 'admin-office' ? 'selected' : ''}>Admin Office</option>
+                        <option value="bills-receipts" ${purpose === 'bills-receipts' ? 'selected' : ''}>Bills/Receipts</option>
+                        <option value="other" ${purpose === 'other' ? 'selected' : ''}>Other</option>
+                    </select>
+                    <input type="text" class="paper-purpose-custom" placeholder="Type custom purpose..." value="${customPurpose}" style="${purpose === 'other' ? 'display: block;' : 'display: none;'} margin-top: 4px;">
+                </div>
+            </td>
             <td><input type="number" class="paper-qty" value="${qty}" min="0"></td>
             <td><input type="number" class="paper-factor readonly-input" value="${factor.toFixed(5)}" readonly></td>
             <td>
@@ -368,10 +381,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const selType = tr.querySelector('.paper-type');
         const inpFactor = tr.querySelector('.paper-factor');
+        const selPurpose = tr.querySelector('.paper-purpose');
+        const inpCustomPurpose = tr.querySelector('.paper-purpose-custom');
 
         selType.addEventListener('change', () => {
             const decPoints = selType.value.includes('a4') ? 5 : 2;
             inpFactor.value = PAPER_COEFFICIENTS[selType.value].toFixed(decPoints);
+        });
+
+        selPurpose.addEventListener('change', () => {
+            if (selPurpose.value === 'other') {
+                inpCustomPurpose.style.display = 'block';
+                inpCustomPurpose.focus();
+            } else {
+                inpCustomPurpose.style.display = 'none';
+                inpCustomPurpose.value = '';
+            }
         });
 
         tr.querySelector('.btn-delete-row').addEventListener('click', () => {
@@ -539,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnAddPaper.addEventListener('click', (e) => {
         e.preventDefault();
-        createPaperRow('standard-a4', 0);
+        createPaperRow('standard-a4', 0, 'exams');
         showToastMsg('Added new paper quantity row.', 'success');
     });
 
@@ -702,7 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createVehicleRow('car', 'petrol', 1, 10, 'institute-owned');
     createEnergyRow('purchased-grid', 12000);
     createLpgRow('girls-hostel-mess', 2.5);
-    createPaperRow('standard-a4', 15000);
+    createPaperRow('standard-a4', 15000, 'exams');
     createTreeRow('neem', 50, 'Main Garden');
 
     // Initial run
