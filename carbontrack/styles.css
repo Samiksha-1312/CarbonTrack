@@ -2247,6 +2247,14 @@ body.dark-theme .privacy-icon-box {
     background: rgba(16, 185, 129, 0.15);
 }
 
+body.dark-theme .hero-bg-overlay {
+    background: linear-gradient(135deg, rgba(11, 15, 25, 0.92) 0%, rgba(19, 25, 38, 0.92) 100%) !important;
+}
+
+body.dark-theme .login-section::before {
+    background: linear-gradient(180deg, rgba(11, 15, 25, 0.8) 0%, rgba(19, 25, 38, 0.92) 100%) !important;
+}
+
 body.dark-theme .calculator-results,
 body.dark-theme .target-box,
 body.dark-theme .insight-box,
