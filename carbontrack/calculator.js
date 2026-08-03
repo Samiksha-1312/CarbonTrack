@@ -273,17 +273,22 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==========================================
        3. LPG Table Logic
        ========================================== */
-    function createLpgRow(type = 'commercial', weight = 0) {
+    function createLpgRow(location = 'girls-hostel-mess', weight = 0, customLocation = '') {
         const tr = document.createElement('tr');
-        const factor = LPG_COEFFICIENTS[type];
+        const factor = 2980.00; // Standard LPG emission factor
 
         tr.innerHTML = `
             <td>
-                <select class="lpg-type">
-                    <option value="commercial" ${type === 'commercial' ? 'selected' : ''}>Commercial Cylinder</option>
-                    <option value="domestic" ${type === 'domestic' ? 'selected' : ''}>Domestic Cylinder</option>
-                    <option value="bulk" ${type === 'bulk' ? 'selected' : ''}>Bulk LPG</option>
-                </select>
+                <div class="lpg-location-wrapper" style="display: flex; flex-direction: column; gap: 4px;">
+                    <select class="lpg-location">
+                        <option value="girls-hostel-mess" ${location === 'girls-hostel-mess' ? 'selected' : ''}>Girls Hostel Mess</option>
+                        <option value="boys-hostel-mess" ${location === 'boys-hostel-mess' ? 'selected' : ''}>Boys Hostel Mess</option>
+                        <option value="canteen" ${location === 'canteen' ? 'selected' : ''}>Canteen</option>
+                        <option value="private" ${location === 'private' ? 'selected' : ''}>Private</option>
+                        <option value="other" ${location === 'other' ? 'selected' : ''}>Other</option>
+                    </select>
+                    <input type="text" class="lpg-location-custom" placeholder="Type custom location..." value="${customLocation}" style="${location === 'other' ? 'display: block;' : 'display: none;'} margin-top: 4px;">
+                </div>
             </td>
             <td><input type="number" class="lpg-weight" value="${weight}" min="0"></td>
             <td><input type="number" class="lpg-factor readonly-input" value="${factor.toFixed(2)}" readonly></td>
@@ -294,11 +299,17 @@ document.addEventListener('DOMContentLoaded', () => {
             </td>
         `;
 
-        const selType = tr.querySelector('.lpg-type');
-        const inpFactor = tr.querySelector('.lpg-factor');
+        const selLocation = tr.querySelector('.lpg-location');
+        const inpCustom = tr.querySelector('.lpg-location-custom');
 
-        selType.addEventListener('change', () => {
-            inpFactor.value = LPG_COEFFICIENTS[selType.value].toFixed(2);
+        selLocation.addEventListener('change', () => {
+            if (selLocation.value === 'other') {
+                inpCustom.style.display = 'block';
+                inpCustom.focus();
+            } else {
+                inpCustom.style.display = 'none';
+                inpCustom.value = '';
+            }
         });
 
         tr.querySelector('.btn-delete-row').addEventListener('click', () => {
@@ -500,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnAddLpg.addEventListener('click', (e) => {
         e.preventDefault();
-        createLpgRow('commercial', 0);
+        createLpgRow('girls-hostel-mess', 0);
         showToastMsg('Added new LPG weight row.', 'success');
     });
 
@@ -668,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Insert initial rows on load
     createVehicleRow('car', 'petrol', 1, 10);
     createEnergyRow('purchased-grid', 12000);
-    createLpgRow('commercial', 2.5);
+    createLpgRow('girls-hostel-mess', 2.5);
     createPaperRow('standard-a4', 15000);
     createTreeRow('neem', 50);
 
