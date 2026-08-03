@@ -2204,7 +2204,7 @@ section {
 }
 
 /* Dark Theme Variables Overrides */
-body.dark-theme {
+html.dark-theme, body.dark-theme {
     --light-bg: #0b0f19;
     --white: #131926;
     --dark: #f8fafc;
@@ -2227,9 +2227,24 @@ body.dark-theme .standards-card,
 body.dark-theme .stats-card,
 body.dark-theme .kpi-card,
 body.dark-theme .chart-card,
-body.dark-theme .timeline-content {
+body.dark-theme .timeline-content,
+body.dark-theme .standard-card {
     background: rgba(19, 25, 38, 0.7);
     border-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .standard-icon-box {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+}
+
+body.dark-theme .step-badge {
+    background: #0f131c;
+    color: var(--text-secondary);
+}
+
+body.dark-theme .privacy-icon-box {
+    background: rgba(16, 185, 129, 0.15);
 }
 
 body.dark-theme .calculator-results,

@@ -355,11 +355,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Click outside modal to close
-    modalOverlay.addEventListener('click', (e) => {
-        if(e.target === modalOverlay) {
-            modalOverlay.classList.remove('active');
-        }
-    });
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if(e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+            }
+        });
+    }
 
     function showToast(message, type = 'info') {
         const toast = document.createElement('div');
@@ -422,6 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check saved theme or system preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark-theme');
         document.body.classList.add('dark-theme');
         if (sunIcon) sunIcon.style.display = 'none';
         if (moonIcon) moonIcon.style.display = 'block';
@@ -429,7 +432,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-            const isDark = document.body.classList.toggle('dark-theme');
+            const isDark = document.documentElement.classList.toggle('dark-theme');
+            document.body.classList.toggle('dark-theme', isDark);
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
             if (isDark) {
                 if (sunIcon) sunIcon.style.display = 'none';
